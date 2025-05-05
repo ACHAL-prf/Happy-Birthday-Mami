@@ -1,0 +1,790 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(#fff -100%, #888);
+  font-family: "Arial Black", "Archivo Black", sans-serif;
+  overflow: hidden;
+  cursor: none;
+}
+
+.scratch-win {
+  position: relative;
+  padding: 1rem 2rem 2rem 2rem;
+  background: linear-gradient(#78d6c6 -150%, #12486b);
+  border: 0.2rem solid #ffdc73;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0.2rem 0.2rem 1rem 0 rgba(0, 0, 56, 0.3);
+}
+@media screen and (max-width: 500px) {
+  .scratch-win {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .scratch-win__coin {
+    transform: scale(0.8);
+  }
+}
+.scratch-win:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-70deg, transparent, transparent 50%, rgba(255, 255, 255, 0.1) 57%, transparent 60%);
+  background-size: 300% 100%;
+  animation: shinning;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+}
+@keyframes shinning {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+.scratch-win__title {
+  width: 100%;
+  margin: 0 auto 1rem;
+  color: #ffdc73;
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(#ffdc73, #a67c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.scratch-win__scratcher {
+  position: relative;
+  width: 20rem;
+  height: 10rem;
+}
+.scratch-win__background, .scratch-win__foreground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.scratch-win__background {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  background-color: #fff;
+  text-transform: uppercase;
+  font-size: 3.6rem;
+}
+.scratch-win__background:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(transparent, transparent 0.5rem, #888 0.5rem, #888 0.6rem);
+  opacity: 0.5;
+}
+.scratch-win--ready .scratch-win__background {
+  display: flex;
+}
+.scratch-win__coin {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--top) - 5rem);
+  left: calc(var(--left) - 3rem);
+  width: 6rem;
+  height: 6rem;
+  pointer-events: none;
+}
+.scratch-win__coin-side {
+  position: absolute;
+  top: -0.4rem;
+  left: 0;
+  z-index: -1;
+  width: calc(100% + 0.6rem);
+  height: calc(100% + 0.6rem);
+  border-radius: 50%;
+  outline: 0.1rem solid #a67c00;
+  background: repeating-linear-gradient(90deg, #d4af37 0, #d4af37 0.5rem, #ffdc73 0.5rem, #ffdc73 0.7rem);
+  box-shadow: 0 1rem 1rem -0.5rem rgba(0, 0, 56, 0.5);
+}
+@supports (-webkit-hyphens: none) {
+  .scratch-win__coin-side {
+    outline: none;
+  }
+}
+.scratch-win__coin-base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0.3rem dashed #d4af37;
+  outline: 0.1rem solid #a67c00;
+  border-radius: 50%;
+  background: radial-gradient(circle at 0 0, #ffdc73, #d4af37 150%);
+  box-shadow: inset 0 -0.1rem 0 0 #a67c00;
+}
+@supports (-webkit-hyphens: none) {
+  .scratch-win__coin-base {
+    outline: none;
+  }
+}
+.scratch-win__coin-base:before, .scratch-win__coin-base:after {
+  content: "€";
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 4rem;
+}
+.scratch-win__coin-base:before {
+  color: #a67c00;
+  transform: rotate(45deg) translateX(-0.4rem) translateY(-0.25rem);
+}
+.scratch-win__coin-base:after {
+  color: #d4af37;
+  transform: rotate(45deg) translateX(-0.3rem) translateY(-0.2rem);
+  background: -webkit-linear-gradient(#ffdc73 -50%, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: 200%;
+  pointer-events: none;
+  --top-position: -350vh;
+}
+.confetti__item {
+  position: absolute;
+  box-shadow: 1rem 1rem 1rem 0 rgba(0, 0, 56, 0.5);
+}
+.confetti__item:nth-child(1) {
+  top: calc(0.5159905037 * 150% + var(--top-position));
+  left: calc(0.3489441994 * 100%);
+  transform: scale(max(1.0166000792, 2)) rotate(57.065486048deg);
+}
+.confetti__item:nth-child(2) {
+  top: calc(0.8669967356 * 150% + var(--top-position));
+  left: calc(0.7813360253 * 100%);
+  transform: scale(max(4.5136600429, 2)) rotate(69.388703389deg);
+}
+.confetti__item:nth-child(3) {
+  top: calc(0.785943916 * 150% + var(--top-position));
+  left: calc(0.8875534762 * 100%);
+  transform: scale(max(4.0974730156, 2)) rotate(36.3398051386deg);
+}
+.confetti__item:nth-child(4) {
+  top: calc(0.4932172118 * 150% + var(--top-position));
+  left: calc(0.115772578 * 100%);
+  transform: scale(max(3.1858240091, 2)) rotate(79.509369439deg);
+}
+.confetti__item:nth-child(5) {
+  top: calc(0.4280019428 * 150% + var(--top-position));
+  left: calc(0.1231667761 * 100%);
+  transform: scale(max(4.2954657459, 2)) rotate(11.229034329deg);
+}
+.confetti__item:nth-child(6) {
+  top: calc(0.1291170652 * 150% + var(--top-position));
+  left: calc(0.6504645005 * 100%);
+  transform: scale(max(2.8752643353, 2)) rotate(73.4517777728deg);
+}
+.confetti__item:nth-child(7) {
+  top: calc(0.766339757 * 150% + var(--top-position));
+  left: calc(0.7331347908 * 100%);
+  transform: scale(max(2.5120192746, 2)) rotate(8.3580870396deg);
+}
+.confetti__item:nth-child(8) {
+  top: calc(0.1946183848 * 150% + var(--top-position));
+  left: calc(0.6442057539 * 100%);
+  transform: scale(max(0.8901248702, 2)) rotate(11.5265643187deg);
+}
+.confetti__item:nth-child(9) {
+  top: calc(0.5823418163 * 150% + var(--top-position));
+  left: calc(0.5360740216 * 100%);
+  transform: scale(max(3.8623904295, 2)) rotate(4.7548083092deg);
+}
+.confetti__item:nth-child(10) {
+  top: calc(0.538424448 * 150% + var(--top-position));
+  left: calc(0.375889192 * 100%);
+  transform: scale(max(2.8582140704, 2)) rotate(79.4342001555deg);
+}
+.confetti__item:nth-child(11) {
+  top: calc(0.5339248132 * 150% + var(--top-position));
+  left: calc(0.6462416817 * 100%);
+  transform: scale(max(2.5193611838, 2)) rotate(2.2534969592deg);
+}
+.confetti__item:nth-child(12) {
+  top: calc(0.9869320745 * 150% + var(--top-position));
+  left: calc(0.8860022069 * 100%);
+  transform: scale(max(2.9448864066, 2)) rotate(22.6401851696deg);
+}
+.confetti__item:nth-child(13) {
+  top: calc(0.6086885891 * 150% + var(--top-position));
+  left: calc(0.8934348008 * 100%);
+  transform: scale(max(3.9138476342, 2)) rotate(81.7649184473deg);
+}
+.confetti__item:nth-child(14) {
+  top: calc(0.1677934726 * 150% + var(--top-position));
+  left: calc(0.1651881833 * 100%);
+  transform: scale(max(0.74934134, 2)) rotate(66.1150863067deg);
+}
+.confetti__item:nth-child(15) {
+  top: calc(0.6412966943 * 150% + var(--top-position));
+  left: calc(0.539931212 * 100%);
+  transform: scale(max(2.6681820455, 2)) rotate(48.770762426deg);
+}
+.confetti__item:nth-child(16) {
+  top: calc(0.2293519833 * 150% + var(--top-position));
+  left: calc(0.967857082 * 100%);
+  transform: scale(max(3.4888711568, 2)) rotate(14.1778717502deg);
+}
+.confetti__item:nth-child(17) {
+  top: calc(0.0909848851 * 150% + var(--top-position));
+  left: calc(0.2802721227 * 100%);
+  transform: scale(max(2.9745798016, 2)) rotate(83.0553016914deg);
+}
+.confetti__item:nth-child(18) {
+  top: calc(0.1337945758 * 150% + var(--top-position));
+  left: calc(0.4132165121 * 100%);
+  transform: scale(max(0.6581291049, 2)) rotate(82.9435762778deg);
+}
+.confetti__item:nth-child(19) {
+  top: calc(0.1366951916 * 150% + var(--top-position));
+  left: calc(0.919347534 * 100%);
+  transform: scale(max(0.6766187656, 2)) rotate(60.3532367432deg);
+}
+.confetti__item:nth-child(20) {
+  top: calc(0.1252423316 * 150% + var(--top-position));
+  left: calc(0.7923175791 * 100%);
+  transform: scale(max(4.5084893984, 2)) rotate(8.9959059762deg);
+}
+.confetti__item:nth-child(21) {
+  top: calc(0.9007429255 * 150% + var(--top-position));
+  left: calc(0.9084513103 * 100%);
+  transform: scale(max(1.3038333058, 2)) rotate(49.0274455133deg);
+}
+.confetti__item:nth-child(22) {
+  top: calc(0.8603502612 * 150% + var(--top-position));
+  left: calc(0.9545197509 * 100%);
+  transform: scale(max(2.393732264, 2)) rotate(32.6234273757deg);
+}
+.confetti__item:nth-child(23) {
+  top: calc(0.1130189496 * 150% + var(--top-position));
+  left: calc(0.0856671413 * 100%);
+  transform: scale(max(0.2522909779, 2)) rotate(49.3472877151deg);
+}
+.confetti__item:nth-child(24) {
+  top: calc(0.7270299642 * 150% + var(--top-position));
+  left: calc(0.3588199286 * 100%);
+  transform: scale(max(4.5613366559, 2)) rotate(53.1093922968deg);
+}
+.confetti__item:nth-child(25) {
+  top: calc(0.2148826221 * 150% + var(--top-position));
+  left: calc(0.6052722825 * 100%);
+  transform: scale(max(2.7238155308, 2)) rotate(89.5824651866deg);
+}
+.confetti__item:nth-child(26) {
+  top: calc(0.8545031366 * 150% + var(--top-position));
+  left: calc(0.5277887634 * 100%);
+  transform: scale(max(4.525848465, 2)) rotate(70.9879195123deg);
+}
+.confetti__item:nth-child(27) {
+  top: calc(0.6226711761 * 150% + var(--top-position));
+  left: calc(0.0754086333 * 100%);
+  transform: scale(max(1.5702354077, 2)) rotate(12.4300794493deg);
+}
+.confetti__item:nth-child(28) {
+  top: calc(0.8113677722 * 150% + var(--top-position));
+  left: calc(0.4345516694 * 100%);
+  transform: scale(max(2.7451170516, 2)) rotate(22.466964419deg);
+}
+.confetti__item:nth-child(29) {
+  top: calc(0.7948934926 * 150% + var(--top-position));
+  left: calc(0.4501808152 * 100%);
+  transform: scale(max(1.6719334895, 2)) rotate(34.0338343093deg);
+}
+.confetti__item:nth-child(30) {
+  top: calc(0.3406845657 * 150% + var(--top-position));
+  left: calc(0.5668694145 * 100%);
+  transform: scale(max(2.9409487935, 2)) rotate(84.7195562124deg);
+}
+.confetti__item:nth-child(31) {
+  top: calc(0.8312332006 * 150% + var(--top-position));
+  left: calc(0.9870929296 * 100%);
+  transform: scale(max(0.1184777476, 2)) rotate(19.1399415107deg);
+}
+.confetti__item:nth-child(32) {
+  top: calc(0.8735343979 * 150% + var(--top-position));
+  left: calc(0.2610675052 * 100%);
+  transform: scale(max(3.1622667532, 2)) rotate(80.8071902307deg);
+}
+.confetti__item:nth-child(33) {
+  top: calc(0.8184217639 * 150% + var(--top-position));
+  left: calc(0.3383934339 * 100%);
+  transform: scale(max(2.9526245967, 2)) rotate(25.7296965167deg);
+}
+.confetti__item:nth-child(34) {
+  top: calc(0.5064911909 * 150% + var(--top-position));
+  left: calc(0.5525306237 * 100%);
+  transform: scale(max(0.1525974531, 2)) rotate(51.2264704137deg);
+}
+.confetti__item:nth-child(35) {
+  top: calc(0.2038473888 * 150% + var(--top-position));
+  left: calc(0.6766238942 * 100%);
+  transform: scale(max(1.6692672959, 2)) rotate(10.6330694deg);
+}
+.confetti__item:nth-child(36) {
+  top: calc(0.975958441 * 150% + var(--top-position));
+  left: calc(0.6237284311 * 100%);
+  transform: scale(max(4.6576854774, 2)) rotate(30.9680038312deg);
+}
+.confetti__item:nth-child(37) {
+  top: calc(0.8663725693 * 150% + var(--top-position));
+  left: calc(0.9467371169 * 100%);
+  transform: scale(max(3.9262252454, 2)) rotate(16.7662319363deg);
+}
+.confetti__item:nth-child(38) {
+  top: calc(0.9877427819 * 150% + var(--top-position));
+  left: calc(0.2838402385 * 100%);
+  transform: scale(max(2.2477768534, 2)) rotate(6.7283337447deg);
+}
+.confetti__item:nth-child(39) {
+  top: calc(0.8856463815 * 150% + var(--top-position));
+  left: calc(0.6391243164 * 100%);
+  transform: scale(max(4.5308450769, 2)) rotate(84.7622542151deg);
+}
+.confetti__item:nth-child(40) {
+  top: calc(0.0517516886 * 150% + var(--top-position));
+  left: calc(0.1375985279 * 100%);
+  transform: scale(max(4.9373852154, 2)) rotate(84.70582563deg);
+}
+.confetti__item:nth-child(41) {
+  top: calc(0.9410740219 * 150% + var(--top-position));
+  left: calc(0.139220484 * 100%);
+  transform: scale(max(0.8470088059, 2)) rotate(17.894864133deg);
+}
+.confetti__item:nth-child(42) {
+  top: calc(0.6863760296 * 150% + var(--top-position));
+  left: calc(0.9277720863 * 100%);
+  transform: scale(max(1.5684169961, 2)) rotate(58.9393662555deg);
+}
+.confetti__item:nth-child(43) {
+  top: calc(0.6380344637 * 150% + var(--top-position));
+  left: calc(0.9687028561 * 100%);
+  transform: scale(max(1.3275600023, 2)) rotate(82.6931731068deg);
+}
+.confetti__item:nth-child(44) {
+  top: calc(0.4744435597 * 150% + var(--top-position));
+  left: calc(0.0385876138 * 100%);
+  transform: scale(max(3.0574190154, 2)) rotate(21.5199600685deg);
+}
+.confetti__item:nth-child(45) {
+  top: calc(0.6567716406 * 150% + var(--top-position));
+  left: calc(0.0244811909 * 100%);
+  transform: scale(max(0.7693293901, 2)) rotate(22.4167777134deg);
+}
+.confetti__item:nth-child(46) {
+  top: calc(0.2084964872 * 150% + var(--top-position));
+  left: calc(0.990068243 * 100%);
+  transform: scale(max(1.0093682905, 2)) rotate(22.3783558491deg);
+}
+.confetti__item:nth-child(47) {
+  top: calc(0.0492428708 * 150% + var(--top-position));
+  left: calc(0.8097104597 * 100%);
+  transform: scale(max(0.6073122397, 2)) rotate(4.7221669892deg);
+}
+.confetti__item:nth-child(48) {
+  top: calc(0.0090315079 * 150% + var(--top-position));
+  left: calc(0.02655614 * 100%);
+  transform: scale(max(0.9797014079, 2)) rotate(40.9982541405deg);
+}
+.confetti__item:nth-child(49) {
+  top: calc(0.8401488317 * 150% + var(--top-position));
+  left: calc(0.3386613447 * 100%);
+  transform: scale(max(1.6427831858, 2)) rotate(8.6370038066deg);
+}
+.confetti__item:nth-child(50) {
+  top: calc(0.8373062335 * 150% + var(--top-position));
+  left: calc(0.336576497 * 100%);
+  transform: scale(max(1.8955647235, 2)) rotate(53.9715244046deg);
+}
+.confetti__item:nth-child(51) {
+  top: calc(0.9690122581 * 150% + var(--top-position));
+  left: calc(0.8479912729 * 100%);
+  transform: scale(max(3.2160398496, 2)) rotate(4.0241124354deg);
+}
+.confetti__item:nth-child(52) {
+  top: calc(0.6365579571 * 150% + var(--top-position));
+  left: calc(0.6344873868 * 100%);
+  transform: scale(max(1.3066901325, 2)) rotate(82.2352735162deg);
+}
+.confetti__item:nth-child(53) {
+  top: calc(0.6118825769 * 150% + var(--top-position));
+  left: calc(0.8557450416 * 100%);
+  transform: scale(max(3.2033401069, 2)) rotate(73.6547972407deg);
+}
+.confetti__item:nth-child(54) {
+  top: calc(0.2620556831 * 150% + var(--top-position));
+  left: calc(0.5621987981 * 100%);
+  transform: scale(max(3.1082179115, 2)) rotate(27.0570662533deg);
+}
+.confetti__item:nth-child(55) {
+  top: calc(0.4685554562 * 150% + var(--top-position));
+  left: calc(0.653990586 * 100%);
+  transform: scale(max(2.3921624824, 2)) rotate(22.5515264592deg);
+}
+.confetti__item:nth-child(56) {
+  top: calc(0.028138032 * 150% + var(--top-position));
+  left: calc(0.745423493 * 100%);
+  transform: scale(max(2.9318458959, 2)) rotate(37.1728876842deg);
+}
+.confetti__item:nth-child(57) {
+  top: calc(0.0567783775 * 150% + var(--top-position));
+  left: calc(0.0901515971 * 100%);
+  transform: scale(max(1.003573637, 2)) rotate(89.5751687169deg);
+}
+.confetti__item:nth-child(58) {
+  top: calc(0.6389546005 * 150% + var(--top-position));
+  left: calc(0.6783173462 * 100%);
+  transform: scale(max(1.7468782311, 2)) rotate(6.1312712116deg);
+}
+.confetti__item:nth-child(59) {
+  top: calc(0.8938027548 * 150% + var(--top-position));
+  left: calc(0.3903827412 * 100%);
+  transform: scale(max(3.0407036016, 2)) rotate(78.3443228657deg);
+}
+.confetti__item:nth-child(60) {
+  top: calc(0.0716749808 * 150% + var(--top-position));
+  left: calc(0.3832576978 * 100%);
+  transform: scale(max(1.6563642876, 2)) rotate(38.0727484048deg);
+}
+.confetti__item:nth-child(61) {
+  top: calc(0.2417422792 * 150% + var(--top-position));
+  left: calc(0.0079989305 * 100%);
+  transform: scale(max(2.4799580897, 2)) rotate(66.501067657deg);
+}
+.confetti__item:nth-child(62) {
+  top: calc(0.8166368749 * 150% + var(--top-position));
+  left: calc(0.5300040094 * 100%);
+  transform: scale(max(2.621914634, 2)) rotate(36.1051447698deg);
+}
+.confetti__item:nth-child(63) {
+  top: calc(0.7742213967 * 150% + var(--top-position));
+  left: calc(0.1029226608 * 100%);
+  transform: scale(max(2.7857639886, 2)) rotate(87.7267109798deg);
+}
+.confetti__item:nth-child(64) {
+  top: calc(0.0130936992 * 150% + var(--top-position));
+  left: calc(0.2772818956 * 100%);
+  transform: scale(max(1.8679458508, 2)) rotate(84.980545267deg);
+}
+.confetti__item:nth-child(65) {
+  top: calc(0.6182848544 * 150% + var(--top-position));
+  left: calc(0.8260085536 * 100%);
+  transform: scale(max(4.1699728945, 2)) rotate(49.0734231123deg);
+}
+.confetti__item:nth-child(66) {
+  top: calc(0.8005523517 * 150% + var(--top-position));
+  left: calc(0.3550578283 * 100%);
+  transform: scale(max(4.6859231451, 2)) rotate(0.0307886203deg);
+}
+.confetti__item:nth-child(67) {
+  top: calc(0.6237817761 * 150% + var(--top-position));
+  left: calc(0.4009489511 * 100%);
+  transform: scale(max(4.9499911172, 2)) rotate(51.3481346923deg);
+}
+.confetti__item:nth-child(68) {
+  top: calc(0.753076383 * 150% + var(--top-position));
+  left: calc(0.872430172 * 100%);
+  transform: scale(max(1.5086968677, 2)) rotate(62.6349355386deg);
+}
+.confetti__item:nth-child(69) {
+  top: calc(0.524577806 * 150% + var(--top-position));
+  left: calc(0.660939342 * 100%);
+  transform: scale(max(2.5471977449, 2)) rotate(3.9158977769deg);
+}
+.confetti__item:nth-child(70) {
+  top: calc(0.0538976869 * 150% + var(--top-position));
+  left: calc(0.2059747378 * 100%);
+  transform: scale(max(1.1335051141, 2)) rotate(34.2281781856deg);
+}
+.confetti__item:nth-child(71) {
+  top: calc(0.7843533759 * 150% + var(--top-position));
+  left: calc(0.4797442897 * 100%);
+  transform: scale(max(2.3341719937, 2)) rotate(66.8449798925deg);
+}
+.confetti__item:nth-child(72) {
+  top: calc(0.4992360359 * 150% + var(--top-position));
+  left: calc(0.8175897871 * 100%);
+  transform: scale(max(0.097029606, 2)) rotate(27.1178047236deg);
+}
+.confetti__item:nth-child(73) {
+  top: calc(0.7095249086 * 150% + var(--top-position));
+  left: calc(0.599653028 * 100%);
+  transform: scale(max(4.261355973, 2)) rotate(68.1038243461deg);
+}
+.confetti__item:nth-child(74) {
+  top: calc(0.5198965249 * 150% + var(--top-position));
+  left: calc(0.4025539257 * 100%);
+  transform: scale(max(3.923843007, 2)) rotate(13.5477147459deg);
+}
+.confetti__item:nth-child(75) {
+  top: calc(0.9517630954 * 150% + var(--top-position));
+  left: calc(0.6797206717 * 100%);
+  transform: scale(max(3.2367539222, 2)) rotate(87.9502767237deg);
+}
+.confetti__item:nth-child(76) {
+  top: calc(0.8097095647 * 150% + var(--top-position));
+  left: calc(0.3101843913 * 100%);
+  transform: scale(max(1.7628716547, 2)) rotate(73.13499681deg);
+}
+.confetti__item:nth-child(77) {
+  top: calc(0.5292147764 * 150% + var(--top-position));
+  left: calc(0.5970562788 * 100%);
+  transform: scale(max(0.5411112404, 2)) rotate(77.9999403108deg);
+}
+.confetti__item:nth-child(78) {
+  top: calc(0.8620125936 * 150% + var(--top-position));
+  left: calc(0.2830863204 * 100%);
+  transform: scale(max(3.7195486823, 2)) rotate(89.2620496982deg);
+}
+.confetti__item:nth-child(79) {
+  top: calc(0.0281869852 * 150% + var(--top-position));
+  left: calc(0.3325320308 * 100%);
+  transform: scale(max(1.492896747, 2)) rotate(10.4181077161deg);
+}
+.confetti__item:nth-child(80) {
+  top: calc(0.6164232885 * 150% + var(--top-position));
+  left: calc(0.1760533229 * 100%);
+  transform: scale(max(2.2426627624, 2)) rotate(1.0254231394deg);
+}
+.confetti__item:nth-child(81) {
+  top: calc(0.0418610124 * 150% + var(--top-position));
+  left: calc(0.1403112215 * 100%);
+  transform: scale(max(2.8474710709, 2)) rotate(48.1285096007deg);
+}
+.confetti__item:nth-child(82) {
+  top: calc(0.3274134865 * 150% + var(--top-position));
+  left: calc(0.772524221 * 100%);
+  transform: scale(max(3.3505447153, 2)) rotate(85.8523671997deg);
+}
+.confetti__item:nth-child(83) {
+  top: calc(0.4240658032 * 150% + var(--top-position));
+  left: calc(0.1846857336 * 100%);
+  transform: scale(max(4.7650740673, 2)) rotate(65.6076843625deg);
+}
+.confetti__item:nth-child(84) {
+  top: calc(0.3221936565 * 150% + var(--top-position));
+  left: calc(0.3354160135 * 100%);
+  transform: scale(max(2.6599076752, 2)) rotate(37.9843357287deg);
+}
+.confetti__item:nth-child(85) {
+  top: calc(0.0568212487 * 150% + var(--top-position));
+  left: calc(0.3389706068 * 100%);
+  transform: scale(max(2.442637769, 2)) rotate(59.156168253deg);
+}
+.confetti__item:nth-child(86) {
+  top: calc(0.8820985698 * 150% + var(--top-position));
+  left: calc(0.4895089831 * 100%);
+  transform: scale(max(2.3065554597, 2)) rotate(18.6301329611deg);
+}
+.confetti__item:nth-child(87) {
+  top: calc(0.9873762175 * 150% + var(--top-position));
+  left: calc(0.691609031 * 100%);
+  transform: scale(max(0.1441361258, 2)) rotate(0.9575454681deg);
+}
+.confetti__item:nth-child(88) {
+  top: calc(0.1536466845 * 150% + var(--top-position));
+  left: calc(0.5788100576 * 100%);
+  transform: scale(max(4.6895988364, 2)) rotate(86.0735202953deg);
+}
+.confetti__item:nth-child(89) {
+  top: calc(0.2427969923 * 150% + var(--top-position));
+  left: calc(0.909036022 * 100%);
+  transform: scale(max(4.8253304549, 2)) rotate(78.636732999deg);
+}
+.confetti__item:nth-child(90) {
+  top: calc(0.1863519879 * 150% + var(--top-position));
+  left: calc(0.9532384258 * 100%);
+  transform: scale(max(0.1407330402, 2)) rotate(42.5293373044deg);
+}
+.confetti__item:nth-child(91) {
+  top: calc(0.1800200061 * 150% + var(--top-position));
+  left: calc(0.3316472552 * 100%);
+  transform: scale(max(1.6720361621, 2)) rotate(78.4969482574deg);
+}
+.confetti__item:nth-child(92) {
+  top: calc(0.5925705448 * 150% + var(--top-position));
+  left: calc(0.4861487184 * 100%);
+  transform: scale(max(2.3132184838, 2)) rotate(26.4396098753deg);
+}
+.confetti__item:nth-child(93) {
+  top: calc(0.2523205266 * 150% + var(--top-position));
+  left: calc(0.2965072664 * 100%);
+  transform: scale(max(2.6539686616, 2)) rotate(81.5491873565deg);
+}
+.confetti__item:nth-child(94) {
+  top: calc(0.013246152 * 150% + var(--top-position));
+  left: calc(0.3903883903 * 100%);
+  transform: scale(max(4.7860757019, 2)) rotate(18.2595524817deg);
+}
+.confetti__item:nth-child(95) {
+  top: calc(0.3362897574 * 150% + var(--top-position));
+  left: calc(0.9646569389 * 100%);
+  transform: scale(max(4.2815329068, 2)) rotate(13.7342840456deg);
+}
+.confetti__item:nth-child(96) {
+  top: calc(0.9770125825 * 150% + var(--top-position));
+  left: calc(0.6148038205 * 100%);
+  transform: scale(max(3.6355089335, 2)) rotate(82.9830707872deg);
+}
+.confetti__item:nth-child(97) {
+  top: calc(0.8927645132 * 150% + var(--top-position));
+  left: calc(0.9874259678 * 100%);
+  transform: scale(max(2.95901332, 2)) rotate(40.6221209427deg);
+}
+.confetti__item:nth-child(98) {
+  top: calc(0.863095658 * 150% + var(--top-position));
+  left: calc(0.1730683693 * 100%);
+  transform: scale(max(2.3049405374, 2)) rotate(0.2892424894deg);
+}
+.confetti__item:nth-child(99) {
+  top: calc(0.6829624651 * 150% + var(--top-position));
+  left: calc(0.0755567964 * 100%);
+  transform: scale(max(0.2925614721, 2)) rotate(60.3374152187deg);
+}
+.confetti__item:nth-child(100) {
+  top: calc(0.6191804434 * 150% + var(--top-position));
+  left: calc(0.156902005 * 100%);
+  transform: scale(max(1.0794255182, 2)) rotate(87.0751251968deg);
+}
+.confetti__item:nth-child(101) {
+  top: calc(0.1161020172 * 150% + var(--top-position));
+  left: calc(0.4758968096 * 100%);
+  transform: scale(max(4.6899536725, 2)) rotate(58.4557112179deg);
+}
+.confetti__item:nth-child(102) {
+  top: calc(0.5955545385 * 150% + var(--top-position));
+  left: calc(0.045726794 * 100%);
+  transform: scale(max(2.9965269814, 2)) rotate(8.775056431deg);
+}
+.confetti__item:nth-child(103) {
+  top: calc(0.0719939086 * 150% + var(--top-position));
+  left: calc(0.2257961116 * 100%);
+  transform: scale(max(0.3675754216, 2)) rotate(81.5930638992deg);
+}
+.confetti__item:nth-child(104) {
+  top: calc(0.8757133297 * 150% + var(--top-position));
+  left: calc(0.887275744 * 100%);
+  transform: scale(max(3.8938562673, 2)) rotate(87.157468126deg);
+}
+.confetti__item:nth-child(105) {
+  top: calc(0.9840889374 * 150% + var(--top-position));
+  left: calc(0.186532094 * 100%);
+  transform: scale(max(4.7510130131, 2)) rotate(14.8406084459deg);
+}
+.confetti__item:nth-child(106) {
+  top: calc(0.7908487985 * 150% + var(--top-position));
+  left: calc(0.2404263031 * 100%);
+  transform: scale(max(2.4818334191, 2)) rotate(3.897960884deg);
+}
+.confetti__item:nth-child(107) {
+  top: calc(0.817649006 * 150% + var(--top-position));
+  left: calc(0.8471848924 * 100%);
+  transform: scale(max(1.0144682095, 2)) rotate(77.4038552542deg);
+}
+.confetti__item:nth-child(108) {
+  top: calc(0.2160620428 * 150% + var(--top-position));
+  left: calc(0.2294040629 * 100%);
+  transform: scale(max(0.3528798369, 2)) rotate(57.5789009352deg);
+}
+.confetti__item:nth-child(109) {
+  top: calc(0.8073933822 * 150% + var(--top-position));
+  left: calc(0.6815265301 * 100%);
+  transform: scale(max(1.0491754615, 2)) rotate(76.3332037367deg);
+}
+.confetti__item:nth-child(110) {
+  top: calc(0.7157013596 * 150% + var(--top-position));
+  left: calc(0.656969705 * 100%);
+  transform: scale(max(2.9886409782, 2)) rotate(20.7642356869deg);
+}
+.confetti__item:nth-child(111) {
+  top: calc(0.7652882648 * 150% + var(--top-position));
+  left: calc(0.7334197228 * 100%);
+  transform: scale(max(4.8704764281, 2)) rotate(61.6736940924deg);
+}
+.confetti__item:nth-child(112) {
+  top: calc(0.4259797988 * 150% + var(--top-position));
+  left: calc(0.0943677174 * 100%);
+  transform: scale(max(3.8348893483, 2)) rotate(84.827308166deg);
+}
+.confetti__item:nth-child(113) {
+  top: calc(0.9280310763 * 150% + var(--top-position));
+  left: calc(0.1488353702 * 100%);
+  transform: scale(max(3.983205558, 2)) rotate(64.9379682553deg);
+}
+.confetti__item:nth-child(114) {
+  top: calc(0.4138830091 * 150% + var(--top-position));
+  left: calc(0.818897912 * 100%);
+  transform: scale(max(4.1865446746, 2)) rotate(5.6019226124deg);
+}
+.confetti__item:nth-child(115) {
+  top: calc(0.5921353464 * 150% + var(--top-position));
+  left: calc(0.624113919 * 100%);
+  transform: scale(max(2.1724023843, 2)) rotate(36.3324050089deg);
+}
+.confetti__item:nth-child(116) {
+  top: calc(0.1087108638 * 150% + var(--top-position));
+  left: calc(0.7408994964 * 100%);
+  transform: scale(max(0.3993014667, 2)) rotate(85.2115741073deg);
+}
+.confetti__item:nth-child(117) {
+  top: calc(0.1044872316 * 150% + var(--top-position));
+  left: calc(0.3136397163 * 100%);
+  transform: scale(max(0.5251719432, 2)) rotate(20.8345246372deg);
+}
+.confetti__item:nth-child(118) {
+  top: calc(0.0673422744 * 150% + var(--top-position));
+  left: calc(0.3617047822 * 100%);
+  transform: scale(max(3.9161512375, 2)) rotate(31.09897755deg);
+}
+.confetti__item:nth-child(119) {
+  top: calc(0.9444364026 * 150% + var(--top-position));
+  left: calc(0.9724128381 * 100%);
+  transform: scale(max(0.3592885177, 2)) rotate(10.5187972796deg);
+}
+.confetti__item:nth-child(120) {
+  top: calc(0.9567365128 * 150% + var(--top-position));
+  left: calc(0.4765232788 * 100%);
+  transform: scale(max(0.3468678073, 2)) rotate(84.5487384233deg);
+}
+.confetti--active {
+  --top-position: 200vh;
+}
+.confetti--active .confetti__item {
+  transition: top 10s ease;
+}
+.confetti--active .confetti__item:nth-child(3n) {
+  transition: top 8s ease;
+}
+.confetti--active .confetti__item:nth-child(4n) {
+  transition: top 12s ease;
+}
